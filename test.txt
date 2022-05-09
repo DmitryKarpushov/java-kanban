@@ -1,0 +1,3 @@
+         //String uniqueID;
+        //uniqueID = UUID.randomUUID().toString();
+        //identifikatorId += identifikatorId;
