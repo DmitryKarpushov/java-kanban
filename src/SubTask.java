@@ -6,9 +6,20 @@ public class SubTask extends Task {
 
     public SubTask(String title, String description, String status, int epicId) {
         super(title, description, status);
-
         this.epicId = epicId;
     }
+
+    @Override
+    public String toString() {
+        return "SubTask{" + '\'' +
+                "epicId=" + epicId + '\''+
+                ", title='" + getStatus() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", status='" + getStatus() + '\'' +
+                ", id='" + getId() + '\''+ '\n' +
+                '}';
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -22,16 +33,6 @@ public class SubTask extends Task {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), epicId);
-    }
-
-    @Override
-    public String toString() {
-        return "SubTask{" +
-                "epicId=" + epicId + '\'' +
-                ", title='" + getStatus() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", status='" + getStatus() + '\'' + '\n' +
-                '}';
     }
 
     public int getEpicId() {

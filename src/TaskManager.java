@@ -20,12 +20,14 @@ public class TaskManager {
     public void addTasks(Task task) {
         id = generateId();//Комментарий 6.
         tasks.put(id, task);
+        task.setId(id);
     }
 
     //2.4 создание Epic
     public void addEpic(Epic epic) {
         id = generateId();
         epics.put(id, epic);
+        epic.setId(id);
         //просчитываем статус одного пришедшего эпика.
         updateStatus(epics.get(id));
     }
@@ -34,12 +36,14 @@ public class TaskManager {
     public void addSubTask(SubTask subTask) {
         id = generateId();
         subTasks.put(id, subTask);
+        subTask.setId(id);
     }
 
     //2.5 Обновление задачи
     public void updateTask(Integer id, Task task) {
         if (tasks.containsKey(id)) {
             tasks.put(id, task);
+            task.setId(id);
             System.out.println(tasks.get(id));
         } else {
             System.err.println("Введите другой id, так как данный id не найден.");
@@ -142,6 +146,7 @@ public class TaskManager {
         //проверка есть ли данный id
         if (epics.containsKey(id)) {
             epics.put(id, epic);
+            epic.setId(id);
             epic.setListSubtasks(listEpic);
             updateStatus(epics.get(id));
             //Тестирование
@@ -202,6 +207,7 @@ public class TaskManager {
         //проверка есть ли данный id
         if (subTasks.containsKey(id)) {
             subTasks.put(id, subTask);
+            subTask.setId(id);
             epics.get(idEpic).getSubtasks().remove(subTask1);
             epics.get(idEpic).setSubtasks(subTask);
             updateStatus(epics.get(idEpic));

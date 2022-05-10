@@ -4,6 +4,7 @@ public class Task {
     private String title;
     private String description;
     private String status;
+    private int id;
 
     public Task(String title, String description, String status) {
         this.title = title;
@@ -12,27 +13,37 @@ public class Task {
     }
 
     @Override
+    public String toString() {
+        return "Task{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", status='" + status + '\'' +
+                ", id=" + id + '\n' +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equals(title, task.title) &&
+        return id == task.id &&
+                Objects.equals(title, task.title) &&
                 Objects.equals(description, task.description) &&
                 Objects.equals(status, task.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, description, status);
+        return Objects.hash(title, description, status, id);
     }
 
-    @Override
-    public String toString() {
-        return "Task{" +
-                "title='" + title + '\'' + '\n' +
-                ", description='" + description + '\'' + '\n' +
-                ", status='" + status + '\'' + '\n' +
-                '}';
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
