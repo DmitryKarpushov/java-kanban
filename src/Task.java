@@ -1,29 +1,50 @@
-public class Task {
-    String titleTask;
-    String description;
-    String statusTask;
+import java.util.Objects;
 
-    public Task(String titleTask, String description, String statusTask) {
-        this.titleTask = titleTask;
+public class Task {
+     String title;
+     String description;
+     String status;
+     int id;
+
+    public Task(String title, String description, String status, int id) {
+        this.title = title;
         this.description = description;
-        this.statusTask = statusTask;
+        this.status = status;
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return id == task.id &&
+                Objects.equals(title, task.title) &&
+                Objects.equals(description, task.description) &&
+                Objects.equals(status, task.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, description, status, id);
     }
 
     @Override
     public String toString() {
         return "Task{" +
-                "titleTask='" + titleTask + '\n' +
-                ", description='" + description + '\n' +
-                ", statusTask='" + statusTask + '\n' +
+                "title='" + title + '\'' + '\n' +
+                ", description='" + description + '\'' + '\n' +
+                ", status='" + status + '\'' + '\n' +
+                ", id=" + id + '\'' + '\n' +
                 '}';
     }
 
-    public String getTitleTask() {
-        return titleTask;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitleTask(String titleTask) {
-        this.titleTask = titleTask;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -34,11 +55,19 @@ public class Task {
         this.description = description;
     }
 
-    public String getStatusTask() {
-        return statusTask;
+    public String getStatus() {
+        return status;
     }
 
-    public void setStatusTask(String statusTask) {
-        this.statusTask = statusTask;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

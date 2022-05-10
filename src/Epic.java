@@ -3,32 +3,33 @@ import java.util.List;
 
 public class Epic extends Task {
 
-    private ArrayList<SubTask> listSubtasks = new ArrayList<>();
+    private ArrayList<SubTask> epicSubtasks = new ArrayList<>();
 
-    public Epic(String titleTask, String description, String statusTask) {
-        super(titleTask, description, statusTask);
+    public Epic(String title, String description, String status, int id) {
+        super(title, description, status, id);
     }
 
     @Override
     public String toString() {
         return "Epic{" +
-                "listSubtasks=" + listSubtasks + '\n' +
-                ", titleTask='" + titleTask + '\'' + '\n' +
-                ", description='" + description + '\'' + '\n' +
-                ", statusTask='" + statusTask + '\'' + '\n' +
+                "epicSubtasks=" + epicSubtasks + '\n' +
+                ", title='" + title + '\n' +
+                ", description='" + description + '\n' +
+                ", status='" + status + '\n' +
+                ", id=" + id + '\n' +
                 '}';
     }
 
-    public ArrayList<SubTask> getListSubtasks() {
-        return listSubtasks;
+    public ArrayList<SubTask> getEpicSubtasks() {
+        return epicSubtasks;
     }
 
-    public void setListSubtasks(SubTask subTask) {
-        this.listSubtasks.add(subTask);
+    public void setEpicSubtasks(SubTask subTask) {
+        this.epicSubtasks.add(subTask);
     }
 
     public void setListSubtasks(List<SubTask> listEpic) {
-        this.listSubtasks.addAll(listEpic);
+        this.epicSubtasks.addAll(listEpic);
     }
 
 }

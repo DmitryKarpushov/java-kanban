@@ -4,51 +4,38 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class TaskManager {
-    private HashMap<Integer, Task> taskHashMap = new HashMap<>();
+    private HashMap<Integer, Task> mapOfTasks = new HashMap<>();
     private HashMap<Integer, SubTask> mapOfSubTasks = new HashMap<>();
     private HashMap<Integer, Epic> mapOfEpics = new HashMap<>();
     Integer idTask = 0;
 
     //Генерация ID
-    public Integer generateId() {
+    private Integer generateId() {
         idTask++;
         return idTask;
     }
 
     //2.4 создание Task
-    public void createTasks(Task task, int id) {
-        if (taskHashMap.containsKey(id)) {
-            System.err.println("Задача с таким id уже есть");
-        } else {
-            taskHashMap.put(id, task);
-        }
+    public void addTasks(Task task) {
+        mapOfTasks.put(generateId(), task);
     }
 
     //2.4 создание Epic
-    public void createEpic(Epic epic, int id) {
-        if (mapOfEpics.containsKey(id)) {
-            System.err.println("Задача Epic с таким id уже есть");
-        } else {
-            mapOfEpics.put(id, epic);
-            updateStatus();
-        }
+    public void addEpic(Epic epic) {
+        mapOfEpics.put(generateId(), epic);
+        //    updateStatus();
     }
 
     //2.4 создание SubTask
-    public void createSubTask(SubTask subTask, int id) {
-        if (mapOfSubTasks.containsKey(id)) {
-            System.err.println("Подзадача с таким id уже есть");
-        } else {
-            mapOfSubTasks.put(id, subTask);
-        }
+    public void addSubTask(SubTask subTask) {
+        mapOfSubTasks.put(generateId(), subTask);
     }
 
     //2.5 Обновление задачи
     public void updateTask(Integer id, Task task) {
-        if (taskHashMap.containsKey(id)) {
-            taskHashMap.put(id, task);
-            updateStatus();
-            System.out.println(taskHashMap.get(id));
+        if (mapOfTasks.containsKey(id)) {
+            mapOfTasks.put(id, task);
+            System.out.println(mapOfTasks.get(id));
         } else {
             System.err.println("Введите другой id, так как данный id не найден.");
         }
@@ -89,9 +76,9 @@ public class TaskManager {
     }
 
     //2.3 Получение задачи по id
-    public Task getIdTask(Integer id) {
-        if (taskHashMap.containsKey(id)) {
-            return taskHashMap.get(id);
+    public Task getTaskById(Integer id) {
+        if (mapOfTasks.containsKey(id)) {
+            return mapOfTasks.get(id);
         } else {
             System.err.println("Введите другой id, так как данный id не найден.");
             return null;
@@ -124,7 +111,7 @@ public class TaskManager {
     }
 
     //2.3 Получение Epic по id
-    public Epic getIdEpic(Integer id) {
+    public Epic getEpicById(Integer id) {
         if (mapOfEpics.containsKey(id)) {
             System.out.println("ID = " + id);
             return mapOfEpics.get(id);
@@ -135,10 +122,10 @@ public class TaskManager {
     }
 
     // Для обновления
-    public ArrayList<SubTask> contentEpic(Integer id) {
+    public ArrayList<SubTask> getEpicSubtasks(Integer id) {
         if (mapOfEpics.containsKey(id)) {
             System.out.println("ID = " + id);
-            return mapOfEpics.get(id).getListSubtasks();
+            return mapOfEpics.get(id).getEpicSubtasks();
         } else {
             System.err.println("Введите другой id, так как данный id не найден.");
             return null;
@@ -151,7 +138,7 @@ public class TaskManager {
         if (mapOfEpics.containsKey(id)) {
             mapOfEpics.put(id, epic);
             epic.setListSubtasks(listEpic);
-            updateStatus();
+            updateStatus(mapOfEpics.get(id));
             //Тестирование
             System.out.println(mapOfEpics.get(id));
         } else {
@@ -167,11 +154,11 @@ public class TaskManager {
             Iterator<Map.Entry<Integer, SubTask>> iter = mapOfSubTasks.entrySet().iterator();
             while (iter.hasNext()) {
                 Map.Entry<Integer, SubTask> entry = iter.next();
-                if (entry.getValue().idEpic == id) { //1
+                if (entry.getValue().epicId == id) { //1
                     iter.remove();
                 }
             }
-            updateStatus();
+            //updateStatus();
             System.out.println("Осталось: ");
             return mapOfEpics;
         } else {
@@ -186,17 +173,17 @@ public class TaskManager {
         hashMap.clear();
         for (Map.Entry<Integer, Epic> entry : mapOfEpics.entrySet()) {
             Epic value = entry.getValue();
-            if (!value.statusTask.equals("NEW")) {
-                value.statusTask = "NEW";
-                value.getListSubtasks().clear();
-            }
+            // if (!value.status.equals("NEW")) {
+            value.status = "NEW";
+            value.getEpicSubtasks().clear();
+            // }
         }
         updateStatus();
         return hashMap;
     }
 
     //2.3 Получение подзадачи по id
-    public Task getIdSubtask(Integer id) {
+    public Task getSubtaskById(Integer id) {
         if (mapOfSubTasks.containsKey(id)) {
             return mapOfSubTasks.get(id);
         } else {
@@ -210,9 +197,9 @@ public class TaskManager {
         //проверка есть ли данный id
         if (mapOfSubTasks.containsKey(id)) {
             mapOfSubTasks.put(id, subTask);
-            mapOfEpics.get(idEpic).getListSubtasks().remove(subTask1);
-            mapOfEpics.get(idEpic).setListSubtasks(subTask);
-            updateStatus();
+            mapOfEpics.get(idEpic).getEpicSubtasks().remove(subTask1);
+            mapOfEpics.get(idEpic).setEpicSubtasks(subTask);
+            updateStatus(mapOfEpics.get(idEpic));
             //Тестирование
             System.out.println(mapOfSubTasks.get(id));
         } else {
@@ -223,38 +210,56 @@ public class TaskManager {
     //2.6 Удаление по идентификатору Subtask.
     public HashMap<Integer, SubTask> deleteSubtask(HashMap<Integer, SubTask> hashMap, Integer id, Integer idEpic, SubTask subTask1) {
         hashMap.remove(id);
-        mapOfEpics.get(idEpic).getListSubtasks().remove(subTask1);
-        updateStatus();
+        mapOfEpics.get(idEpic).getEpicSubtasks().remove(subTask1);
+        System.out.println("TEST!!!!!!!!!!!!!!!!!!!!!!" + mapOfEpics.get(idEpic));
+        updateStatus(mapOfEpics.get(idEpic));
         return hashMap;
     }
 
     public ArrayList<SubTask> printTaskEpic(Integer id) {
-       return mapOfEpics.get(id).getListSubtasks();
+        return mapOfEpics.get(id).getEpicSubtasks();
     }
 
-    private void updateStatus(){
+    private void updateStatus(Epic epic) {
+        ArrayList<SubTask> value1 = epic.getEpicSubtasks();
+        for (SubTask listSubtask : value1) {
+            if ((value1 == null)) {
+                epic.status = "NEW";
+            } else if (listSubtask.status.equals("NEW")) {
+                epic.status = "NEW";
+            } else if (listSubtask.status.equals("DONE")) {
+                epic.status = "DONE";
+            } else {
+                epic.status = "IN_PROGRESS";
+            }
+        }
+    }
+    //Данный метод оставил,тк при удалении всех сабтасков я прохожу по каждому эпику и
+    // начинаю чистить подзадачи,в местах где можно проверять только один эпик сделал
+    private void updateStatus() {
         for (Map.Entry<Integer, Epic> entry : mapOfEpics.entrySet()) {
             Epic value = entry.getValue();
-            for(SubTask listSubtask : value.getListSubtasks()){
-                if ((entry.getValue().getListSubtasks() == null)) {
-                    entry.getValue().statusTask = "NEW";
-                } else if (listSubtask.statusTask == "NEW") {
-                    entry.getValue().statusTask = "NEW";
-                } else if (listSubtask.statusTask == "DONE") {
-                    entry.getValue().statusTask = "DONE";
+            for (SubTask listSubtask : value.getEpicSubtasks()) {
+                if ((entry.getValue().getEpicSubtasks() == null)) {
+                    entry.getValue().status = "NEW";
+                } else if (listSubtask.status == "NEW") {
+                    entry.getValue().status = "NEW";
+                } else if (listSubtask.status == "DONE") {
+                    entry.getValue().status = "DONE";
                 } else {
-                    entry.getValue().statusTask = "IN_PROGRESS";
+                    entry.getValue().status = "IN_PROGRESS";
                 }
             }
         }
     }
 
-    public HashMap<Integer, Task> getTaskHashMap() {
-        return taskHashMap;
+
+    public HashMap<Integer, Task> getMapOfTasks() {
+        return mapOfTasks;
     }
 
-    public void setTaskHashMap(HashMap<Integer, Task> taskHashMap) {
-        this.taskHashMap = taskHashMap;
+    public void setMapOfTasks(HashMap<Integer, Task> mapOfTasks) {
+        this.mapOfTasks = mapOfTasks;
     }
 
     public HashMap<Integer, SubTask> getMapOfSubTasks() {

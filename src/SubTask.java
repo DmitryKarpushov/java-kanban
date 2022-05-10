@@ -1,21 +1,22 @@
 public class SubTask extends Task {
     String epicTask;
-    int idEpic;
+    int epicId;
 
-    public SubTask(String titleTask, String description, String statusTask, String epicTask, int idEpic) {
-        super(titleTask, description, statusTask);
+    public SubTask(String title, String description, String status, int id, String epicTask, int epicId) {
+        super(title, description, status, id);
         this.epicTask = epicTask;
-        this.idEpic = idEpic;
+        this.epicId = epicId;
     }
 
     @Override
     public String toString() {
         return "SubTask{" +
-                "titleTask='" + titleTask + '\'' +
+                "epicTask='" + epicTask + '\'' +
+                ", epicId=" + epicId +
+                ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", statusTask='" + statusTask + '\'' +
-                ", epicTask='" + epicTask + '\'' +
-                ", idEpic=" + idEpic + '\n' +
+                ", status='" + status + '\'' +
+                ", id=" + id + '\n' +
                 '}';
     }
 
@@ -27,11 +28,11 @@ public class SubTask extends Task {
         this.epicTask = epicTask;
     }
 
-    public int getIdEpic() {
-        return idEpic;
+    public int getEpicId() {
+        return epicId;
     }
 
-    public void setIdEpic(int idEpic) {
-        this.idEpic = idEpic;
+    public void setEpicId(int epicId) {
+        this.epicId = epicId;
     }
 }
