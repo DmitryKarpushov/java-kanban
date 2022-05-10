@@ -1,31 +1,37 @@
+import java.util.Objects;
+
 public class SubTask extends Task {
-    String epicTask;
+
     int epicId;
 
-    public SubTask(String title, String description, String status, int id, String epicTask, int epicId) {
-        super(title, description, status, id);
-        this.epicTask = epicTask;
+    public SubTask(String title, String description, String status, int epicId) {
+        super(title, description, status);
+
         this.epicId = epicId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        SubTask subTask = (SubTask) o;
+        return epicId == subTask.epicId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), epicId);
     }
 
     @Override
     public String toString() {
         return "SubTask{" +
-                "epicTask='" + epicTask + '\'' +
-                ", epicId=" + epicId +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", status='" + status + '\'' +
-                ", id=" + id + '\n' +
+                "epicId=" + epicId + '\'' +
+                ", title='" + getStatus() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", status='" + getStatus() + '\'' + '\n' +
                 '}';
-    }
-
-    public String getEpicTask() {
-        return epicTask;
-    }
-
-    public void setEpicTask(String epicTask) {
-        this.epicTask = epicTask;
     }
 
     public int getEpicId() {

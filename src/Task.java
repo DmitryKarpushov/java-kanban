@@ -1,16 +1,14 @@
 import java.util.Objects;
 
 public class Task {
-     String title;
-     String description;
-     String status;
-     int id;
+    private String title;
+    private String description;
+    private String status;
 
-    public Task(String title, String description, String status, int id) {
+    public Task(String title, String description, String status) {
         this.title = title;
         this.description = description;
         this.status = status;
-        this.id = id;
     }
 
     @Override
@@ -18,15 +16,14 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id &&
-                Objects.equals(title, task.title) &&
+        return Objects.equals(title, task.title) &&
                 Objects.equals(description, task.description) &&
                 Objects.equals(status, task.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, description, status, id);
+        return Objects.hash(title, description, status);
     }
 
     @Override
@@ -35,7 +32,6 @@ public class Task {
                 "title='" + title + '\'' + '\n' +
                 ", description='" + description + '\'' + '\n' +
                 ", status='" + status + '\'' + '\n' +
-                ", id=" + id + '\'' + '\n' +
                 '}';
     }
 
@@ -63,11 +59,4 @@ public class Task {
         this.status = status;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 }

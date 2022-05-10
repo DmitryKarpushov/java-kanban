@@ -1,35 +1,50 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Epic extends Task {
 
-    private ArrayList<SubTask> epicSubtasks = new ArrayList<>();
+    private ArrayList<SubTask> subtasks = new ArrayList<>();
 
-    public Epic(String title, String description, String status, int id) {
-        super(title, description, status, id);
+    public Epic(String title, String description, String status) {
+        super(title, description, status);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Epic epic = (Epic) o;
+        return Objects.equals(subtasks, epic.subtasks);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), subtasks);
     }
 
     @Override
     public String toString() {
         return "Epic{" +
-                "epicSubtasks=" + epicSubtasks + '\n' +
-                ", title='" + title + '\n' +
-                ", description='" + description + '\n' +
-                ", status='" + status + '\n' +
-                ", id=" + id + '\n' +
+                "subtasks=" + subtasks + '\n' +
+                ", title='" + getTitle() + '\n' +
+                ", description='" + getDescription() + '\n' +
+                ", status='" + getStatus() + '\n' +
+
                 '}';
     }
 
-    public ArrayList<SubTask> getEpicSubtasks() {
-        return epicSubtasks;
+    public ArrayList<SubTask> getSubtasks() {
+        return subtasks;
     }
 
-    public void setEpicSubtasks(SubTask subTask) {
-        this.epicSubtasks.add(subTask);
+    public void setSubtasks(SubTask subTask) {
+        this.subtasks.add(subTask);
     }
 
     public void setListSubtasks(List<SubTask> listEpic) {
-        this.epicSubtasks.addAll(listEpic);
+        this.subtasks.addAll(listEpic);
     }
 
 }
