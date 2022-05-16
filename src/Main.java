@@ -1,7 +1,9 @@
 public class Main {
     public static void main(String[] args) {
-        TaskManager taskManager = new TaskManager();
+        //InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        //Managers taskManager = new Managers();
+        TaskManager manager = (TaskManager) Managers.getDefault();
         Test test = new Test();
-        test.test(taskManager);
+        test.test((InMemoryTaskManager) manager);
     }
 }

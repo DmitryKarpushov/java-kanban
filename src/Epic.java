@@ -10,14 +10,13 @@ public class Epic extends Task {
         super(title, description, status);
     }
 
-
     @Override
     public String toString() {
         return "Epic{" +
-                "subtasks='" + subtasks + '\''+ '\n'+
-                ", title='" + getTitle() + '\''+ '\n' +
-                ", description='" + getDescription() + '\''+ '\n' +
-                ", status='" + getStatus() + '\''+ '\n' +
+                "subtasks='" + subtasks + '\''+
+                ", title='" + getTitle() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", status='" + getStatus() + '\''+
                 ", id='" + getId() + '\''+
                 '}';
     }
