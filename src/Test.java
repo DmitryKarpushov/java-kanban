@@ -55,7 +55,7 @@ public class Test {
         inMemoryTaskManager.getTaskById(2);
         inMemoryTaskManager.getEpicById(3);
 
-        System.out.println(inMemoryTaskManager.getHistoryManager().getHistory());
+        System.out.println(inMemoryTaskManager.getHistoryManager());
         System.out.println("=================================================");
 
     }

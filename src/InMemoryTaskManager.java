@@ -241,8 +241,24 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public HistoryManager getHistoryManager() {
-        return historyManager;
+    public List<Task> getHistoryManager() {
+        return historyManager.getHistory();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InMemoryTaskManager that = (InMemoryTaskManager) o;
+        return Objects.equals(tasks, that.tasks) &&
+                Objects.equals(subTasks, that.subTasks) &&
+                Objects.equals(epics, that.epics) &&
+                Objects.equals(historyManager, that.historyManager) &&
+                Objects.equals(idTask, that.idTask);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tasks, subTasks, epics, historyManager, idTask);
+    }
 }
