@@ -44,9 +44,9 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Map<Integer, Task> printAllTask() {
+    public List<Task> getAllTasks() {
         if (!tasks.isEmpty()) {
-            return tasks;
+            return new ArrayList<>(tasks.values());
         } else {
             System.out.println("Список задач Task пуст! ");
             System.err.println("Список задач Task пуст! ");
@@ -55,9 +55,9 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Map<Integer, Epic> printAllTaskEpic() {
+    public List<Epic> getAllTaskEpic() {
         if (!epics.isEmpty()) {
-            return epics;
+            return new ArrayList<>(epics.values());
         } else {
             System.out.println("Список задач Epic пуст! ");
             System.err.println("Список задач Epic пуст! ");
@@ -66,9 +66,9 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Map<Integer, SubTask> printAllSubTask() {
+    public List<SubTask> getAllSubTask() {
         if (!subTasks.isEmpty()) {
-            return subTasks;
+            return new ArrayList<>(subTasks.values());
         } else {
             System.out.println("Список задач SubTask пуст! ");
             System.err.println("Список задач SubTask пуст! ");
@@ -243,22 +243,5 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public List<Task> getHistoryManager() {
         return historyManager.getHistory();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        InMemoryTaskManager that = (InMemoryTaskManager) o;
-        return Objects.equals(tasks, that.tasks) &&
-                Objects.equals(subTasks, that.subTasks) &&
-                Objects.equals(epics, that.epics) &&
-                Objects.equals(historyManager, that.historyManager) &&
-                Objects.equals(idTask, that.idTask);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(tasks, subTasks, epics, historyManager, idTask);
     }
 }

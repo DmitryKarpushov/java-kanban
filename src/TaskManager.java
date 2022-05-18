@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.Map;
 
 public interface TaskManager {
 
@@ -11,11 +10,11 @@ public interface TaskManager {
 
     void updateTask(Integer id, Task task);
 
-    Map<Integer, Task> printAllTask();
+    List<Task> getAllTasks();
 
-    Map<Integer, Epic> printAllTaskEpic();
+    List<Epic> getAllTaskEpic();
 
-    Map<Integer, SubTask> printAllSubTask();
+    List<SubTask> getAllSubTask();
 
     Task getTaskById(Integer id);
 

@@ -27,14 +27,12 @@ public class Test {
         epicTwo.addSubtasks(subTaskThree);
 
         System.out.println("2.1 Вывод всего списка задач Task: ");
-        System.out.println(inMemoryTaskManager.printAllTask());
+        System.out.println(inMemoryTaskManager.getAllTasks());
         System.out.println("2.1 Вывод всего списка задач Epic: ");
-        System.out.println(inMemoryTaskManager.printAllTaskEpic());
+        System.out.println(inMemoryTaskManager.getAllTaskEpic());
         System.out.println("2.1 Вывод всего списка задач Subtask: ");
-        System.out.println(inMemoryTaskManager.printAllSubTask());
+        System.out.println(inMemoryTaskManager.getAllSubTask());
         System.out.println("==========================================================");
-
-       // inMemoryTaskManager.deleteAllTask();
 
         inMemoryTaskManager.updateTask(1, taskUpdate);
         inMemoryTaskManager.updateEpic(3, epicUpdate, inMemoryTaskManager.getEpicSubtasks(3));
@@ -44,11 +42,11 @@ public class Test {
         System.out.println();
         System.out.println("Проверка после обновления!");
         System.out.println("2.1 Вывод всего списка задач Task: ");
-        System.out.println(inMemoryTaskManager.printAllTask());
+        System.out.println(inMemoryTaskManager.getAllTasks());
         System.out.println("2.1 Вывод всего списка задач Epic: ");
-        System.out.println(inMemoryTaskManager.printAllTaskEpic());
+        System.out.println(inMemoryTaskManager.getAllTaskEpic());
         System.out.println("2.1 Вывод всего списка задач Subtask: ");
-        System.out.println(inMemoryTaskManager.printAllSubTask());
+        System.out.println(inMemoryTaskManager.getAllSubTask());
 
         System.out.println("Просмотр задач: ");
         inMemoryTaskManager.getTaskById(1);
