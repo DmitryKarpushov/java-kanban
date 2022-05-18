@@ -2,8 +2,10 @@ import java.util.List;
 
 public interface HistoryManager {
 
-    void add(Object id);
+    int MAX_VALUE = 10;
 
-    List<Object> getHistory();
+    void add(Task task);
+
+    List<Task> getHistory();
 
 }

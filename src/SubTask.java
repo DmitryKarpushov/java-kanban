@@ -2,9 +2,9 @@ import java.util.Objects;
 
 public class SubTask extends Task {
 
-    int epicId;
+    private int epicId;
 
-    public SubTask(String title, String description, String status, int epicId) {
+    public SubTask(String title, String description, Status status, int epicId) {
         super(title, description, status);
         this.epicId = epicId;
     }
@@ -39,7 +39,4 @@ public class SubTask extends Task {
         return epicId;
     }
 
-    public void setEpicId(int epicId) {
-        this.epicId = epicId;
-    }
 }

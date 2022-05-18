@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class Epic extends Task {
 
-    private ArrayList<SubTask> subtasks = new ArrayList<>();
+    private List<SubTask> subtasks = new ArrayList<>();
 
-    public Epic(String title, String description, String status) {
+    public Epic(String title, String description, Status status) {
         super(title, description, status);
     }
 
@@ -35,15 +35,15 @@ public class Epic extends Task {
         return Objects.hash(super.hashCode(), subtasks);
     }
 
-    public ArrayList<SubTask> getSubtasks() {
+    public List<SubTask> getSubtasks() {
         return subtasks;
     }
 
-    public void setSubtasks(SubTask subTask) {
+    public void addSubtasks(SubTask subTask) {
         this.subtasks.add(subTask);
     }
 
-    public void setListSubtasks(List<SubTask> listEpic) {
+    public void setAllSubtasks(List<SubTask> listEpic) {
         this.subtasks.addAll(listEpic);
     }
 

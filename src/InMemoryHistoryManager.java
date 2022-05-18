@@ -4,24 +4,19 @@ import java.util.Objects;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    private List<Object> viewTask = new ArrayList<>();
+    private List<Task> viewTask = new ArrayList<>();
 
     @Override
-    public void add(Object id) {
-        viewTask.add(id);
-        if (viewTask.size() > 9) {
+    public void add(Task task) {
+        viewTask.add(task);
+        if (viewTask.size() == MAX_VALUE) {
             viewTask.remove(0);
         }
     }
 
     @Override
-    public List<Object> getHistory() {
+    public List<Task> getHistory() {
         return viewTask;
-    }
-
-
-    public void setViewTask(ArrayList<Object> viewTask) {
-        this.viewTask = viewTask;
     }
 
     @Override
