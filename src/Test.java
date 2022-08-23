@@ -40,7 +40,7 @@ public class Test {
         System.out.println(inMemoryTaskManager.getHistoryManager());
         System.out.println("2)Просмотр задач: ");
        // inMemoryTaskManager.deleteAllTask();
-        //inMemoryTaskManager.deleteAllSubtask();
+        ///inMemoryTaskManager.deleteAllSubtask();
         inMemoryTaskManager.deleteAllTask();
        // inMemoryTaskManager.deleteTask(1);
       //  inMemoryTaskManager.deleteEpic(3);
