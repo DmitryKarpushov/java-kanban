@@ -1,17 +1,19 @@
 import java.util.Objects;
 
 public class Task {
-    private String title;
-    private String description;
-    private Status status;
-    private int id;
+    private String title; //Заголовок
+    private String description; //Описание
+    private Status status; //Статус
+    private int id; //id задачи
 
+    //Конструктор
     public Task(String title, String description, Status status) {
         this.title = title;
         this.description = description;
         this.status = status;
     }
 
+    //Печать задачи
     @Override
     public String toString() {
         return "Task{" +
@@ -37,6 +39,7 @@ public class Task {
     public int hashCode() {
         return Objects.hash(title, description, status, id);
     }
+
 
     public int getId() {
         return id;

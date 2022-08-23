@@ -1,5 +1,5 @@
 import java.util.List;
-
+// Работа с задачами
 public interface TaskManager {
 
     void addTasks(Task task);

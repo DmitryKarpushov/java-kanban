@@ -2,7 +2,7 @@ import java.util.Objects;
 
 public class SubTask extends Task {
 
-    private int epicId;
+    private int epicId;// id главной задачи
 
     public SubTask(String title, String description, Status status, int epicId) {
         super(title, description, status);

@@ -1,4 +1,4 @@
-public enum Status {
+public enum Status { // статусы
     DONE,
     IN_PROGRESS,
     NEW
