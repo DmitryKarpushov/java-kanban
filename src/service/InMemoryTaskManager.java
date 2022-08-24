@@ -1,4 +1,9 @@
+package service;
+
 import java.util.*;
+import Enum.*;
+import Manager.*;
+import Task.*;
 
 public class InMemoryTaskManager implements TaskManager {
 
@@ -7,7 +12,7 @@ public class InMemoryTaskManager implements TaskManager {
     private Map<Integer, Epic> epics = new HashMap<>();
     private final HistoryManager historyManager = Managers.getDefaultHistory();
 
-    Integer idTask = 0;
+    private Integer idTask = 0;
 
     @Override
     public void addTasks(Task task) {
@@ -32,11 +37,11 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateTask(Integer id, Task task) {
-        if (tasks.containsKey(id)) {
-            tasks.put(id, task);
-            task.setId(id);
-            System.out.println(tasks.get(id));
+    public void updateTask(Task task) {
+        if (tasks.containsKey(task.getId())) {
+            tasks.put(task.getId(), task);
+            task.setId(task.getId());
+            System.out.println(tasks.get(task.getId()));
         } else {
             System.err.println("Введите другой id, так как данный id не найден.");
         }
@@ -44,36 +49,27 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public List<Task> getAllTasks() {
-        if (!tasks.isEmpty()) {
-            return new ArrayList<>(tasks.values());
-        } else {
+    public List<Task> getTasks() {
+        if (tasks.isEmpty()) {
             System.out.println("Список задач Task пуст! ");
-            System.err.println("Список задач Task пуст! ");
-            return null;
         }
+        return new ArrayList<>(tasks.values());
     }
 
     @Override
-    public List<Epic> getAllTaskEpic() {
-        if (!epics.isEmpty()) {
-            return new ArrayList<>(epics.values());
-        } else {
+    public List<Epic> getEpics() {
+        if (epics.isEmpty()) {
             System.out.println("Список задач Epic пуст! ");
-            System.err.println("Список задач Epic пуст! ");
-            return null;
         }
+        return new ArrayList<>(epics.values());
     }
 
     @Override
-    public List<SubTask> getAllSubTask() {
-        if (!subTasks.isEmpty()) {
-            return new ArrayList<>(subTasks.values());
-        } else {
+    public List<SubTask> getSubTasks() {
+        if (subTasks.isEmpty()) {
             System.out.println("Список задач SubTask пуст! ");
-            System.err.println("Список задач SubTask пуст! ");
-            return null;
         }
+        return new ArrayList<>(subTasks.values());
     }
 
     @Override
@@ -88,7 +84,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void deleteAllTask() {
+    public void deleteTasks() {
         for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
             historyManager.remove(entry.getKey());
         }
@@ -103,7 +99,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void deleteAllEpic() {
+    public void deleteEpics() {
         if (!epics.isEmpty()) {
             for (Map.Entry<Integer, Epic> entry : epics.entrySet()) {
                 historyManager.remove(entry.getKey());
@@ -138,12 +134,12 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateEpic(Integer id, Epic epic, List<SubTask> listEpic) {
-        if (epics.containsKey(id)) {
-            epics.put(id, epic);
-            epic.setId(id);
+    public void updateEpic(Epic epic, List<SubTask> listEpic) {
+        if (epics.containsKey(epic.getId())) {
+            epics.put(epic.getId(), epic);
+            epic.setId(epic.getId());
             epic.setAllSubtasks(listEpic);
-            updateStatus(epics.get(id));
+            updateStatus(epics.get(epic.getId()));
         } else {
             System.err.println("Введите другой id, так как данный id не найден.");
         }
@@ -169,7 +165,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void deleteAllSubtask() {
+    public void deleteSubtask() {
         subTasks.clear();
         for (Map.Entry<Integer, Epic> entry : epics.entrySet()) {
             Epic value = entry.getValue();
@@ -193,10 +189,10 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateSubtask(Integer id, SubTask subTask, Integer idEpic, SubTask subTaskPrev) {
-        if (subTasks.containsKey(id)) {
-            subTasks.put(id, subTask);
-            subTask.setId(id);
+    public void updateSubtask(SubTask subTask, Integer idEpic, SubTask subTaskPrev) {
+        if (subTasks.containsKey(subTask.getId())) {
+            subTasks.put(subTask.getId(), subTask);
+            subTask.setId(subTask.getId());
             epics.get(idEpic).getSubtasks().remove(subTaskPrev);
             epics.get(idEpic).addSubtasks(subTask);
             updateStatus(epics.get(idEpic));
@@ -206,11 +202,11 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void deleteSubtask(Integer id, Integer idEpic, SubTask subTask) {
+    public void deleteSubtask(Integer id, Integer idEpic/*, SubTask subTask*/) {
         //Удаление из просмотра задач
         historyManager.remove(id);
         subTasks.remove(id);
-        epics.get(idEpic).getSubtasks().remove(subTask);
+        epics.get(idEpic).getSubtasks().remove(id) /*.remove(subTask)*/;
         updateStatus(epics.get(idEpic));
     }
 
@@ -254,7 +250,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public List<Task> getHistoryManager() {
+    public List<Task> getHistoryView() {
         return historyManager.getHistory();
     }
 }

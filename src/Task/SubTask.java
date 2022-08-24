@@ -1,4 +1,6 @@
-import java.util.Objects;
+package Task;
+
+import Enum.Status;
 
 public class SubTask extends Task {
 
@@ -18,21 +20,6 @@ public class SubTask extends Task {
                 ", status='" + getStatus() + '\'' +
                 ", id='" + getId() + '\''+ '\n' +
                 '}';
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        SubTask subTask = (SubTask) o;
-        return epicId == subTask.epicId;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), epicId);
     }
 
     public int getEpicId() {

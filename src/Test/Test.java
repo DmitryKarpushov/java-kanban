@@ -1,7 +1,13 @@
+package Test;
+
+import Enum.Status;
+import Manager.TaskManager;
+import Task.*;
+
 public class Test {
     public void test(TaskManager inMemoryTaskManager) {
         //задачи
-        Task taskOne = new Task("Уборка", "Погладить вещи, постирать рубашки, помыть полы. ", Status.NEW);
+        Task taskOne = new Task("Уборка", "Погладить вещи, постирать рубашки, помыть полы. ",Status.NEW);
         Task taskTwo = new Task("Прогулка", "Сходить в кафе, прогуляться по парку. ", Status.NEW);
         inMemoryTaskManager.addTasks(taskOne);
         inMemoryTaskManager.addTasks(taskTwo);
@@ -23,11 +29,11 @@ public class Test {
         epicTwo.addSubtasks(subTaskThree);
 
         System.out.println("2.1 Вывод всего списка задач Task: ");
-        System.out.println(inMemoryTaskManager.getAllTasks());
+        System.out.println(inMemoryTaskManager.getTasks());
         System.out.println("2.2 Вывод всего списка задач Epic: ");
-        System.out.println(inMemoryTaskManager.getAllTaskEpic());
+        System.out.println(inMemoryTaskManager.getEpics());
         System.out.println("2.3 Вывод всего списка задач Subtask: ");
-        System.out.println(inMemoryTaskManager.getAllSubTask());
+        System.out.println(inMemoryTaskManager.getSubTasks());
         System.out.println("==========================================================");
 
 
@@ -37,16 +43,17 @@ public class Test {
         inMemoryTaskManager.getEpicById(3);
         inMemoryTaskManager.getTaskById(1);
         inMemoryTaskManager.getTaskById(2);
-        System.out.println(inMemoryTaskManager.getHistoryManager());
+
+        System.out.println(inMemoryTaskManager.getHistoryView());
         System.out.println("2)Просмотр задач: ");
        // inMemoryTaskManager.deleteAllTask();
-        ///inMemoryTaskManager.deleteAllSubtask();
-        inMemoryTaskManager.deleteAllTask();
-       // inMemoryTaskManager.deleteTask(1);
+       // inMemoryTaskManager.deleteSubtask();
+       // inMemoryTaskManager.deleteAllTask();
+        inMemoryTaskManager.deleteTask(1);
       //  inMemoryTaskManager.deleteEpic(3);
         System.out.println();
         System.out.println();
-        System.out.println(inMemoryTaskManager.getHistoryManager());
+        System.out.println(inMemoryTaskManager.getHistoryView());
         System.out.println("=================================================");
 
     }

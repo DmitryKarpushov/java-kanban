@@ -1,3 +1,8 @@
+package service;
+
+import Manager.HistoryManager;
+import Task.Task;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,8 +34,8 @@ public class InMemoryHistoryManager implements HistoryManager {
     private Node first;
     private Node last;
 
-    private ArrayList<Task> getTask() {
-        ArrayList<Task> tasks = new ArrayList<>();
+    private List<Task> getTask() {
+        List<Task> tasks = new ArrayList<>();
         Node node = first;
         while (node != null) {
             tasks.add(node.task);

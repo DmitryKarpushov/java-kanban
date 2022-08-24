@@ -1,3 +1,7 @@
+package Task;
+
+import Enum.Status;
+
 import java.util.Objects;
 
 public class Task {
@@ -23,7 +27,12 @@ public class Task {
                 ", id=" + id + '\n' +
                 '}';
     }
-
+    /**
+     * Заметка для себя
+     *
+     * Достаточно определить equals/hashCode в главном классе
+     * У потомков данного класса переопределять данные методы не нужно
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
