@@ -5,7 +5,7 @@ import Task.Task;
 
 import java.util.List;
 import Task.SubTask;
-// Работа с задачами/
+// Работа с задачами//
 public interface TaskManager {
 
     void addTasks(Task task);
