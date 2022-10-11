@@ -1,10 +1,10 @@
 package Manager;
 
-import Task.Epic;
-import Task.Task;
+import model.Epic;
+import model.Task;
 
 import java.util.List;
-import Task.SubTask;
+import model.SubTask;
 // Работа с задачами//
 public interface TaskManager {
 
@@ -32,7 +32,7 @@ public interface TaskManager {
 
     void deleteSubtask();
 
-    void deleteSubtask(Integer id, Integer idEpic);
+    void deleteSubtasks(Integer id, Integer idEpic);
 
     Task getTaskById(Integer id);
 

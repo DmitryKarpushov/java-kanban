@@ -1,6 +1,6 @@
-package Task;
+package model;
 
-import Enum.Status;
+import Enum.*;
 
 import java.util.Objects;
 
@@ -66,12 +66,24 @@ public class Task {
         return description;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Status getStatus() {
         return status;
     }
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public TaskType getTaskType(){
+        return TaskType.TASK;
     }
 
 }

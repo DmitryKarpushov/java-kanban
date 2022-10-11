@@ -1,6 +1,6 @@
-package Task;
+package model;
 
-import Enum.Status;
+import Enum.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +22,10 @@ public class Epic extends Task {
                 ", status='" + getStatus() + '\''+
                 ", id='" + getId() + '\''+
                 '}';
+    }
+
+    public TaskType getTaskType(){
+        return TaskType.EPIC;
     }
 
     public List<SubTask> getSubtasks() {

@@ -3,16 +3,21 @@ package service;
 import java.util.*;
 import Enum.*;
 import Manager.*;
-import Task.*;
+import model.*;
 
 public class InMemoryTaskManager implements TaskManager {
 
     private Map<Integer, Task> tasks = new HashMap<>();
     private Map<Integer, SubTask> subTasks = new HashMap<>();
     private Map<Integer, Epic> epics = new HashMap<>();
+    //private final HistoryManager historyManager;
     private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     private Integer idTask = 0;
+
+//    public InMemoryTaskManager(HistoryManager historyManager) {
+//        this.historyManager = historyManager;
+//    }
 
     @Override
     public void addTasks(Task task) {
@@ -50,25 +55,16 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Task> getTasks() {
-        if (tasks.isEmpty()) {
-            System.out.println("Список задач Task пуст! ");
-        }
         return new ArrayList<>(tasks.values());
     }
 
     @Override
     public List<Epic> getEpics() {
-        if (epics.isEmpty()) {
-            System.out.println("Список задач Epic пуст! ");
-        }
         return new ArrayList<>(epics.values());
     }
 
     @Override
     public List<SubTask> getSubTasks() {
-        if (subTasks.isEmpty()) {
-            System.out.println("Список задач SubTask пуст! ");
-        }
         return new ArrayList<>(subTasks.values());
     }
 
@@ -97,7 +93,6 @@ public class InMemoryTaskManager implements TaskManager {
         historyManager.remove(id);
         tasks.remove(id);
     }
-
     @Override
     public void deleteEpics() {
         if (!epics.isEmpty()) {
@@ -202,7 +197,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void deleteSubtask(Integer id, Integer idEpic/*, SubTask subTask*/) {
+    public void deleteSubtasks(Integer id, Integer idEpic/*, SubTask subTask*/) {
         //Удаление из просмотра задач
         historyManager.remove(id);
         subTasks.remove(id);
@@ -251,6 +246,12 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Task> getHistoryView() {
+        System.out.println("InMemoryTaskManager.getHistoryView.historyManager.getHistory()" + historyManager.getHistory());
         return historyManager.getHistory();
     }
+
+    public HistoryManager getHistoryManager() {
+        return historyManager;
+    }
+
 }

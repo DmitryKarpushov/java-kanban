@@ -1,7 +1,7 @@
 package service;
 
 import Manager.HistoryManager;
-import Task.Task;
+import model.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,12 +53,10 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
         last = node;
     }
-
     @Override
     public List<Task> getHistory() {
         return getTask();
     }
-
     @Override
     public void remove(int id) {
         removeNode(id);

@@ -1,6 +1,6 @@
-package Task;
+package model;
 
-import Enum.Status;
+import Enum.*;
 
 public class SubTask extends Task {
 
@@ -20,6 +20,10 @@ public class SubTask extends Task {
                 ", status='" + getStatus() + '\'' +
                 ", id='" + getId() + '\''+ '\n' +
                 '}';
+    }
+
+    public TaskType getTaskType(){
+        return TaskType.SUB_TASK;
     }
 
     public int getEpicId() {
