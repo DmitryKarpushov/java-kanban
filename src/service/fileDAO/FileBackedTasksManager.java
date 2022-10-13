@@ -200,7 +200,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     static List<Integer> historyViewFromString(String value) {
         List<Integer> historyView = new ArrayList<>();
-        if (value.isEmpty()) {
+        if (!value.isEmpty()) {
             List<String> id = List.of(value.split(","));
             for (String number : id) {
                 historyView.add(Integer.valueOf(number));
