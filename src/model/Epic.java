@@ -1,6 +1,6 @@
 package model;
 
-import Enum.*;
+import enums.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,19 +8,17 @@ public class Epic extends Task {
 
     private List<SubTask> subtasks = new ArrayList<>();
 
-    public Epic(String title, String description, Status status) {
+    public Epic(String title, String description, TaskStatus status) {
         super(title, description, status);
     }
 
     @Override
     public String toString() {
-        return "Epic{" +
-                ", title='" + getTitle() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", status='" + getStatus() + '\''+
-                ", id='" + getId() + '\''+
-                ",subtasks='" + subtasks + '\''+
-                '}';
+        return getId() + "," + getTaskType() + "," + getTitle() + "," + getStatus() + "," + getDescription() + ",";
+    }
+
+    public static Epic fromString(List<String> line) {
+        return new Epic(line.get(2), line.get(4), TaskStatus.valueOf(line.get(3)));
     }
 
     public TaskType getTaskType(){

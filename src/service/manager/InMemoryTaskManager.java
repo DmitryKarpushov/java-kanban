@@ -1,7 +1,7 @@
 package service.manager;
 
 import java.util.*;
-import Enum.*;
+import enums.*;
 import model.*;
 import service.history.HistoryManager;
 
@@ -161,7 +161,7 @@ public class InMemoryTaskManager implements TaskManager {
         subTasks.clear();
         for (Map.Entry<Integer, Epic> entry : epics.entrySet()) {
             Epic value = entry.getValue();
-            value.getStatus().equals(String.valueOf(Status.NEW));
+            value.getStatus().equals(String.valueOf(TaskStatus.NEW));
             value.getSubtasks().clear();
             historyManager.remove(entry.getKey());
         }
@@ -210,13 +210,13 @@ public class InMemoryTaskManager implements TaskManager {
         List<SubTask> value = epic.getSubtasks();
         for (SubTask subTask : value) {
             if ((value == null)) {
-                epic.setStatus(Status.NEW);
-            } else if (subTask.getStatus().equals(Status.NEW)) {
-                epic.setStatus(Status.NEW);
-            } else if (subTask.getStatus().equals(Status.DONE)) {
-                epic.setStatus(Status.DONE);
+                epic.setStatus(TaskStatus.NEW);
+            } else if (subTask.getStatus().equals(TaskStatus.NEW)) {
+                epic.setStatus(TaskStatus.NEW);
+            } else if (subTask.getStatus().equals(TaskStatus.DONE)) {
+                epic.setStatus(TaskStatus.DONE);
             } else {
-                epic.setStatus(Status.IN_PROGRESS);
+                epic.setStatus(TaskStatus.IN_PROGRESS);
             }
         }
     }
@@ -228,13 +228,13 @@ public class InMemoryTaskManager implements TaskManager {
             Epic value = entry.getValue();
             for (SubTask subtask : value.getSubtasks()) {
                 if ((entry.getValue().getSubtasks() == null)) {
-                    entry.getValue().setStatus(Status.NEW);
-                } else if (subtask.getStatus().equals(Status.NEW)) {
-                    entry.getValue().setStatus(Status.NEW);
-                } else if (subtask.getStatus().equals(Status.DONE)) {
-                    entry.getValue().setStatus(Status.DONE);
+                    entry.getValue().setStatus(TaskStatus.NEW);
+                } else if (subtask.getStatus().equals(TaskStatus.NEW)) {
+                    entry.getValue().setStatus(TaskStatus.NEW);
+                } else if (subtask.getStatus().equals(TaskStatus.DONE)) {
+                    entry.getValue().setStatus(TaskStatus.DONE);
                 } else {
-                    entry.getValue().setStatus(Status.IN_PROGRESS);
+                    entry.getValue().setStatus(TaskStatus.IN_PROGRESS);
                 }
             }
         }

@@ -1,7 +1,9 @@
-package service.fileDAO;
+package service.filedao;
 
 import model.*;
-import Enum.*;
+import enums.*;
+import service.exception.FileReadErrorException;
+import service.exception.FileWriteErrorException;
 import service.history.HistoryManager;
 import service.manager.InMemoryTaskManager;
 import service.exception.ManagerSaveException;
@@ -25,34 +27,21 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             writer.write("id,type,name,status,description,epic\n");
 
             for (Task task : getTasks()) {
-                writer.println(toStringTask(task));
+                writer.println(task.toString());
             }
             for (Epic epic : getEpics()) {
-                writer.println(toStringEpic(epic));
+                writer.println(epic.toString());
             }
 
             for (SubTask subtask : getSubTasks()) {
-                writer.println(toStringSubTask(subtask));
+                writer.println(subtask.toString());
             }
             writer.println();
             writer.write(historyToString(getHistoryManager()));
             writer.println();
         } catch (IOException e) {
-            throw new ManagerSaveException("Не удалось считать данные из файла.");
+            throw new FileWriteErrorException("Не удалось считать данные из файла.");
         }
-
-    }
-
-    private String toStringSubTask(SubTask subtask) {
-        return subtask.getId() + "," + subtask.getTaskType() + "," + subtask.getTitle() + "," + subtask.getStatus() + "," + subtask.getDescription() + "," + subtask.getEpicId();
-    }
-
-    private String toStringEpic(Epic epic) {
-        return epic.getId() + "," + epic.getTaskType() + "," + epic.getTitle() + "," + epic.getStatus() + "," + epic.getDescription();
-    }
-
-    private String toStringTask(Task task) {
-        return task.getId() + "," + task.getTaskType() + "," + task.getTitle() + "," + task.getStatus() + "," + task.getDescription();
     }
 
     @Override
@@ -193,7 +182,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
         } catch (IOException e) {
             e.printStackTrace();
-            throw new ManagerSaveException("Не удалось считать файл");
+            throw new FileReadErrorException("Не удалось считать файл");
         }
 
     }
@@ -212,14 +201,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     private Task historyFromString(String value) {
         List<String> line = List.of(value.split(","));
         if (line.get(1).equals("SUBTASK")) {
-            SubTask subtask = new SubTask(line.get(2), line.get(4), Status.valueOf(line.get(3)), Integer.parseInt(line.get(5)));
-            return subtask;
+            return SubTask.fromString(line);
         } else if (line.get(1).equals("EPIC")) {
-            Epic epic = new Epic(line.get(2), line.get(4), Status.valueOf(line.get(3)));
-            return epic;
+            return Epic.fromString(line);
         } else {
-            Task task = new Task(line.get(2), line.get(4), Status.valueOf(line.get(3)));
-            return task;
+            return Task.fromString(line);
         }
     }
 }

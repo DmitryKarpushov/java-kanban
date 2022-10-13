@@ -1,8 +1,8 @@
 import model.Epic;
 import model.SubTask;
 import model.Task;
-import service.fileDAO.FileBackedTasksManager;
-import Enum.*;
+import service.filedao.FileBackedTasksManager;
+import enums.*;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -15,17 +15,17 @@ public class Main {
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
 
 
-        Task taskOne = new Task("Уборка", "Погладить вещи", Status.NEW);
-        Task taskTwo = new Task("Прогулка", "Сходить в кафе", Status.NEW);
+        Task taskOne = new Task("Уборка", "Погладить вещи", TaskStatus.NEW);
+        Task taskTwo = new Task("Прогулка", "Сходить в кафе", TaskStatus.NEW);
         fileBackedTasksManager.addTasks(taskOne);
         fileBackedTasksManager.addTasks(taskTwo);
 
-        Epic epicTwo = new Epic("Университет", "Написать диплом", Status.NEW);
+        Epic epicTwo = new Epic("Университет", "Написать диплом", TaskStatus.NEW);
         fileBackedTasksManager.addEpic(epicTwo);
 
-        SubTask subTaskOne = new SubTask("Написать вывод", "вывод", Status.IN_PROGRESS, epicTwo.getId());
-        SubTask subTaskTwo = new SubTask("Написать реализацию", "код", Status.NEW, epicTwo.getId());
-        SubTask subTaskThree = new SubTask("Написать введение", "текст", Status.NEW, epicTwo.getId());
+        SubTask subTaskOne = new SubTask("Написать вывод", "вывод", TaskStatus.IN_PROGRESS, epicTwo.getId());
+        SubTask subTaskTwo = new SubTask("Написать реализацию", "код", TaskStatus.NEW, epicTwo.getId());
+        SubTask subTaskThree = new SubTask("Написать введение", "текст", TaskStatus.NEW, epicTwo.getId());
 
         fileBackedTasksManager.addSubTask(subTaskOne);
         fileBackedTasksManager.addSubTask(subTaskTwo);
