@@ -5,6 +5,6 @@ package Enum;
  */
 public enum TaskType {
     TASK,
-    SUB_TASK,
+    SUBTASK,
     EPIC
 }

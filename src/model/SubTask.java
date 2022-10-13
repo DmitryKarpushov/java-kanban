@@ -4,7 +4,7 @@ import Enum.*;
 
 public class SubTask extends Task {
 
-    private int epicId;// id главной задачи
+    private int epicId;
 
     public SubTask(String title, String description, Status status, int epicId) {
         super(title, description, status);
@@ -23,7 +23,7 @@ public class SubTask extends Task {
     }
 
     public TaskType getTaskType(){
-        return TaskType.SUB_TASK;
+        return TaskType.SUBTASK;
     }
 
     public int getEpicId() {

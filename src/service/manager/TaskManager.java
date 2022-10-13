@@ -1,11 +1,10 @@
-package Manager;
+package service.manager;
 
 import model.Epic;
 import model.Task;
 
 import java.util.List;
 import model.SubTask;
-// Работа с задачами//
 public interface TaskManager {
 
     void addTasks(Task task);

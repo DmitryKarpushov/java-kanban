@@ -10,14 +10,12 @@ public class Task {
     private Status status; //Статус
     private int id; //id задачи
 
-    //Конструктор
     public Task(String title, String description, Status status) {
         this.title = title;
         this.description = description;
         this.status = status;
     }
 
-    //Печать задачи
     @Override
     public String toString() {
         return "Task{" +

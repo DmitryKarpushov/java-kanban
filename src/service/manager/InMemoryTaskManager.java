@@ -1,23 +1,20 @@
-package service;
+package service.manager;
 
 import java.util.*;
 import Enum.*;
-import Manager.*;
 import model.*;
+import service.history.HistoryManager;
 
 public class InMemoryTaskManager implements TaskManager {
 
-    private Map<Integer, Task> tasks = new HashMap<>();
-    private Map<Integer, SubTask> subTasks = new HashMap<>();
-    private Map<Integer, Epic> epics = new HashMap<>();
-    //private final HistoryManager historyManager;
+    // добавить Final
+    private final Map<Integer, Task> tasks = new HashMap<>();
+    private final Map<Integer, SubTask> subTasks = new HashMap<>();
+    private final Map<Integer, Epic> epics = new HashMap<>();
+
     private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     private Integer idTask = 0;
-
-//    public InMemoryTaskManager(HistoryManager historyManager) {
-//        this.historyManager = historyManager;
-//    }
 
     @Override
     public void addTasks(Task task) {
@@ -108,7 +105,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Epic getEpicById(Integer id) {
+    public Task getEpicById(Integer id) {
         if (epics.containsKey(id)) {
             historyManager.add(epics.get(id));
             return epics.get(id);
@@ -149,7 +146,7 @@ public class InMemoryTaskManager implements TaskManager {
             Iterator<Map.Entry<Integer, SubTask>> iter = subTasks.entrySet().iterator();
             while (iter.hasNext()) {
                 Map.Entry<Integer, SubTask> entry = iter.next();
-                if (entry.getValue().getEpicId() == id) { //1
+                if (entry.getValue().getEpicId() == id) {
                     iter.remove();
                 }
             }
@@ -166,7 +163,6 @@ public class InMemoryTaskManager implements TaskManager {
             Epic value = entry.getValue();
             value.getStatus().equals(String.valueOf(Status.NEW));
             value.getSubtasks().clear();
-            //Удаление из просмотра задач
             historyManager.remove(entry.getKey());
         }
         updateStatus();
@@ -197,11 +193,11 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void deleteSubtasks(Integer id, Integer idEpic/*, SubTask subTask*/) {
+    public void deleteSubtasks(Integer id, Integer idEpic) {
         //Удаление из просмотра задач
         historyManager.remove(id);
         subTasks.remove(id);
-        epics.get(idEpic).getSubtasks().remove(id) /*.remove(subTask)*/;
+        epics.get(idEpic).getSubtasks().remove(id);
         updateStatus(epics.get(idEpic));
     }
 
@@ -244,9 +240,18 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
+    public void addToHistory(int id) {
+        if (epics.containsKey(id)) {
+            historyManager.add(epics.get(id));
+        } else if (subTasks.containsKey(id)) {
+            historyManager.add(subTasks.get(id));
+        } else if (tasks.containsKey(id)) {
+            historyManager.add(tasks.get(id));
+        }
+    }
+
     @Override
     public List<Task> getHistoryView() {
-        System.out.println("InMemoryTaskManager.getHistoryView.historyManager.getHistory()" + historyManager.getHistory());
         return historyManager.getHistory();
     }
 

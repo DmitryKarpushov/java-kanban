@@ -1,6 +1,5 @@
-package service;
+package service.history;
 
-import Manager.HistoryManager;
 import model.Task;
 
 import java.util.ArrayList;

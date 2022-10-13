@@ -1,26 +1,22 @@
-import Manager.Managers;
 import model.Epic;
 import model.SubTask;
 import model.Task;
-import service.FileBackedTasksManager;
+import service.fileDAO.FileBackedTasksManager;
 import Enum.*;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-//        TaskManager manager = Managers.getDefault();
-//        Test test = new Test();
-//        test.test(manager);
+
         Path path = Path.of("test.csv");
         File file = new File(String.valueOf(path));
-        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(/*Managers.getDefaultHistory()*/ file);
+        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
 
 
-        Task taskOne = new Task("Уборка", "Погладить вещи, постирать рубашки, помыть полы. ", Status.NEW);
-        Task taskTwo = new Task("Прогулка", "Сходить в кафе, прогуляться по парку. ", Status.NEW);
+        Task taskOne = new Task("Уборка", "Погладить вещи", Status.NEW);
+        Task taskTwo = new Task("Прогулка", "Сходить в кафе", Status.NEW);
         fileBackedTasksManager.addTasks(taskOne);
         fileBackedTasksManager.addTasks(taskTwo);
 
@@ -39,6 +35,9 @@ public class Main {
         epicTwo.addSubtasks(subTaskTwo);
         epicTwo.addSubtasks(subTaskThree);
 
+        System.out.println(fileBackedTasksManager.getTaskById(1));
+        System.out.println(fileBackedTasksManager.getTaskById(2));
+
         System.out.println("2.1 Вывод всего списка задач Task: ");
         System.out.println(fileBackedTasksManager.getTasks());
         System.out.println("2.2 Вывод всего списка задач Epic: ");
@@ -46,18 +45,25 @@ public class Main {
         System.out.println("2.3 Вывод всего списка задач Subtask: ");
         System.out.println(fileBackedTasksManager.getSubTasks());
         System.out.println("==========================================================");
-        System.out.println(fileBackedTasksManager.getTaskById(1));
-        System.out.println(fileBackedTasksManager.getTaskById(2));
+
         System.out.println("==========================================================getHistoryView");
         System.out.println(fileBackedTasksManager.getHistoryView());
-        System.out.println("==========================================================getHistoryManager");
-        System.out.println(fileBackedTasksManager.getHistoryManager());
+        System.out.println("==========================================================");
+        System.out.println("==========================================================");
 
-        List<Task> list = fileBackedTasksManager.getHistoryManager().getHistory();
 
-        for (Task list1: list) {
-            System.out.println("GET ID = " + list1.getId());
-        }
+        FileBackedTasksManager fileBackedTasksManagerSecond = new FileBackedTasksManager(file);
+        fileBackedTasksManagerSecond.loadFromFile(file);
+
+
+
+        System.out.println(fileBackedTasksManagerSecond.getTaskById(1));
+        System.out.println(fileBackedTasksManagerSecond.getTaskById(2));
+
+        System.out.println("fileBackedTasksManagerSecond==========================================================getHistoryView");
+        System.out.println(fileBackedTasksManagerSecond.getHistoryView());
+
+
 
     }
 }

@@ -1,7 +1,6 @@
 package model;
 
 import Enum.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,18 +15,17 @@ public class Epic extends Task {
     @Override
     public String toString() {
         return "Epic{" +
-                "subtasks='" + subtasks + '\''+
                 ", title='" + getTitle() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", status='" + getStatus() + '\''+
                 ", id='" + getId() + '\''+
+                ",subtasks='" + subtasks + '\''+
                 '}';
     }
 
     public TaskType getTaskType(){
         return TaskType.EPIC;
     }
-
     public List<SubTask> getSubtasks() {
         return subtasks;
     }
