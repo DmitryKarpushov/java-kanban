@@ -6,6 +6,8 @@ import enums.*;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.Month;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,55 +16,29 @@ public class Main {
         File file = new File(String.valueOf(path));
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
 
-
-        Task taskOne = new Task("Уборка", "Погладить вещи", TaskStatus.NEW);
-        Task taskTwo = new Task("Прогулка", "Сходить в кафе", TaskStatus.NEW);
+        Task taskOne = new Task("Уборка", "Погладить вещи", TaskStatus.NEW, LocalDateTime.of(2022, Month.FEBRUARY, 2, 22, 22), 5);
+        Task taskTwo = new Task("Прогулка", "Сходить в кафе", TaskStatus.NEW, LocalDateTime.of(2022, Month.FEBRUARY, 2, 22, 45), 5);
         fileBackedTasksManager.addTasks(taskOne);
         fileBackedTasksManager.addTasks(taskTwo);
 
-        Epic epicTwo = new Epic("Университет", "Написать диплом", TaskStatus.NEW);
+        Epic epicTwo = new Epic("Университет", "Написать диплом", TaskStatus.NEW,null,0,null);
         fileBackedTasksManager.addEpic(epicTwo);
 
-        SubTask subTaskOne = new SubTask("Написать вывод", "вывод", TaskStatus.IN_PROGRESS, epicTwo.getId());
-        SubTask subTaskTwo = new SubTask("Написать реализацию", "код", TaskStatus.NEW, epicTwo.getId());
-        SubTask subTaskThree = new SubTask("Написать введение", "текст", TaskStatus.NEW, epicTwo.getId());
+        SubTask subTaskOne = new SubTask("Написать вывод", "вывод", TaskStatus.NEW, epicTwo.getId(),LocalDateTime.of(2022, Month.FEBRUARY, 2, 22, 30), 5);
+        SubTask subTaskTwo = new SubTask("Написать реализацию", "код", TaskStatus.NEW, epicTwo.getId(),LocalDateTime.of(2022, Month.FEBRUARY, 2, 22, 36), 5);
 
         fileBackedTasksManager.addSubTask(subTaskOne);
         fileBackedTasksManager.addSubTask(subTaskTwo);
-        fileBackedTasksManager.addSubTask(subTaskThree);
 
         epicTwo.addSubtasks(subTaskOne);
         epicTwo.addSubtasks(subTaskTwo);
-        epicTwo.addSubtasks(subTaskThree);
-
-        System.out.println(fileBackedTasksManager.getTaskById(1));
-        System.out.println(fileBackedTasksManager.getTaskById(2));
 
         System.out.println("2.1 Вывод всего списка задач Task: ");
-        System.out.println(fileBackedTasksManager.getTasks());
+        System.out.println(fileBackedTasksManager.getTasks().size());
         System.out.println("2.2 Вывод всего списка задач Epic: ");
         System.out.println(fileBackedTasksManager.getEpics());
         System.out.println("2.3 Вывод всего списка задач Subtask: ");
         System.out.println(fileBackedTasksManager.getSubTasks());
-        System.out.println("==========================================================");
-
-        System.out.println("==========================================================getHistoryView");
-        System.out.println(fileBackedTasksManager.getHistoryView());
-        System.out.println("==========================================================");
-        System.out.println("==========================================================");
-
-
-        FileBackedTasksManager fileBackedTasksManagerSecond = new FileBackedTasksManager(file);
-        fileBackedTasksManagerSecond.loadFromFile(file);
-
-
-
-        System.out.println(fileBackedTasksManagerSecond.getTaskById(1));
-        System.out.println(fileBackedTasksManagerSecond.getTaskById(2));
-
-        System.out.println("fileBackedTasksManagerSecond==========================================================getHistoryView");
-        System.out.println(fileBackedTasksManagerSecond.getHistoryView());
-
 
 
     }

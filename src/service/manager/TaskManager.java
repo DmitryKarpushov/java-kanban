@@ -29,21 +29,26 @@ public interface TaskManager {
 
     void deleteEpic(Integer id);
 
-    void deleteSubtask();
+    void deleteSubtasks();
 
-    void deleteSubtasks(Integer id, Integer idEpic);
+    void deleteSubtask(Integer id);
 
     Task getTaskById(Integer id);
 
-    Task getEpicById(Integer id);
+    Epic getEpicById(Integer id);
 
     Task getSubtaskById(Integer id);
 
-    void updateEpic(Epic epic, List<SubTask> listEpic);
+    void updateEpic(Epic epic);
 
-    void updateSubtask(SubTask subTask, Integer idEpic, SubTask subTaskPrev);
+    void updateSubtask(SubTask subTask);
 
     void updateTask(Task task);
 
     List<Task> getHistoryView();
+
+    List<Task> getPrioritizedTasks();
+
+    List<SubTask> getSubtasksEpicId(int id);
+    void updateTimeEpic(Epic epic);
 }

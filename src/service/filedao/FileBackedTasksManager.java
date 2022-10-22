@@ -1,12 +1,10 @@
 package service.filedao;
 
 import model.*;
-import enums.*;
 import service.exception.FileReadErrorException;
 import service.exception.FileWriteErrorException;
 import service.history.HistoryManager;
 import service.manager.InMemoryTaskManager;
-import service.exception.ManagerSaveException;
 
 import java.io.*;
 import java.util.*;
@@ -14,17 +12,14 @@ import java.util.*;
 /**
  * @author Дмитрий Карпушов 31.08.2022
  */
-
 public class FileBackedTasksManager extends InMemoryTaskManager {
-    private File file;
-
+    private final File file;
     public FileBackedTasksManager(File file) {
         this.file = file;
     }
-
-    public void save() {
+    private void save() {
         try (PrintWriter writer = new PrintWriter(file)) {
-            writer.write("id,type,name,status,description,epic\n");
+            writer.write("id,type,name,status,description,startTime,duration,endTime\n");
 
             for (Task task : getTasks()) {
                 writer.println(task.toString());
@@ -70,8 +65,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public Task getEpicById(Integer id) {
-        Task epic = super.getEpicById(id);
+    public Epic getEpicById(Integer id) {
+        Epic epic = super.getEpicById(id);
         save();
         return epic;
     }
@@ -95,15 +90,14 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         save();
     }
 
-
     @Override
     public List<SubTask> getEpicSubtasks(Integer id) {
         return super.getEpicSubtasks(id);
     }
 
     @Override
-    public void updateEpic(Epic epic, List<SubTask> listEpic) {
-        super.updateEpic(epic, listEpic);
+    public void updateEpic(Epic epic) {
+        super.updateEpic(epic);
         save();
     }
 
@@ -120,14 +114,14 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void deleteSubtask() {
-        super.deleteSubtask();
+    public void deleteSubtasks() {
+        super.deleteSubtasks();
         save();
     }
 
     @Override
-    public void deleteSubtasks(Integer id, Integer idEpic) {
-        super.deleteSubtasks(id, idEpic);
+    public void deleteSubtask(Integer id) {
+        super.deleteSubtask(id);
         save();
     }
 
@@ -138,8 +132,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void updateSubtask(SubTask subTask, Integer idEpic, SubTask subTaskPrev) {
-        super.updateSubtask(subTask, idEpic, subTaskPrev);
+    public void updateSubtask(SubTask subTask) {
+        super.updateSubtask(subTask);
         save();
     }
 
@@ -208,4 +202,10 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             return Task.fromString(line);
         }
     }
+
+    @Override
+    public List<Task> getPrioritizedTasks() {
+        return new ArrayList<>(prioritizedTasks);
+    }
+
 }

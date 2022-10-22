@@ -5,7 +5,6 @@ import service.history.InMemoryHistoryManager;
 
 public class Managers {
 
-
     public static TaskManager getInMemoryTaskManager(HistoryManager historyManager) {
         return new InMemoryTaskManager();
     }
