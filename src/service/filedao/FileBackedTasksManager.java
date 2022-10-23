@@ -35,7 +35,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             writer.write(historyToString(getHistoryManager()));
             writer.println();
         } catch (IOException e) {
-            throw new FileWriteErrorException("Не удалось считать данные из файла.");
+            throw new FileWriteErrorException("Не удалось считать данные из файла.",e);
         }
     }
 
