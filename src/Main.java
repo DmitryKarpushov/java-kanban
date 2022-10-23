@@ -33,26 +33,6 @@ public class Main {
         epicTwo.addSubtasks(subTaskOne);
         epicTwo.addSubtasks(subTaskTwo);
 
-        System.out.println("2.1 Вывод всего списка задач Task: ");
-        System.out.println(fileBackedTasksManager.getTasks());
-        System.out.println("2.2 Вывод всего списка задач Epic: ");
-        System.out.println(fileBackedTasksManager.getEpics());
-        System.out.println("2.3 Вывод всего списка задач Subtask: ");
-        System.out.println(fileBackedTasksManager.getSubTasks());
-        System.out.println("2.4 Приоритет ");
-        System.out.println(fileBackedTasksManager.getPrioritizedTasks());
-
-
-        System.out.println("===========================================");
-        fileBackedTasksManager.deleteEpic(3);
-        System.out.println("===========================================");
-        System.out.println("УДАЛЕНИЕ 2.2 Вывод всего списка задач Epic: ");
-        System.out.println(fileBackedTasksManager.getEpics());
-        System.out.println("УДАЛЕНИЕ 2.3 Вывод всего списка задач Subtask: ");
-        System.out.println(fileBackedTasksManager.getSubTasks());
-        System.out.println("УДАЛЕНИЕ 2.4 Приоритет ");
-        System.out.println(fileBackedTasksManager.getPrioritizedTasks());
-
 
     }
 }
