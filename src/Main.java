@@ -24,15 +24,21 @@ public class Main {
         Epic epicTwo = new Epic("Университет", "Написать диплом", TaskStatus.NEW,null,0,null);
         fileBackedTasksManager.addEpic(epicTwo);
 
-        SubTask subTaskOne = new SubTask("Написать вывод", "вывод", TaskStatus.DONE, epicTwo.getId(),LocalDateTime.of(2022, Month.FEBRUARY, 2, 22, 30), 5);
+        SubTask subTaskOne = new SubTask("Написать вывод", "вывод", TaskStatus.NEW, epicTwo.getId(),LocalDateTime.of(2022, Month.FEBRUARY, 2, 22, 30), 5);
         SubTask subTaskTwo = new SubTask("Написать реализацию", "код", TaskStatus.IN_PROGRESS, epicTwo.getId(),LocalDateTime.of(2022, Month.FEBRUARY, 2, 22, 36), 5);
+        SubTask subTaskThree = new SubTask("Написать реализацию", "код", TaskStatus.NEW, epicTwo.getId(),LocalDateTime.of(2032, Month.FEBRUARY, 2, 22, 36), 5);
+        SubTask subTaskFour = new SubTask("Написать реализацию", "код", TaskStatus.DONE, epicTwo.getId(),LocalDateTime.of(2031, Month.FEBRUARY, 2, 22, 36), 5);
 
         fileBackedTasksManager.addSubTask(subTaskOne);
         fileBackedTasksManager.addSubTask(subTaskTwo);
+        fileBackedTasksManager.addSubTask(subTaskThree);
+        fileBackedTasksManager.addSubTask(subTaskFour);
 
         epicTwo.addSubtasks(subTaskOne);
         epicTwo.addSubtasks(subTaskTwo);
-
+        epicTwo.addSubtasks(subTaskThree);
+        epicTwo.addSubtasks(subTaskFour);
+        System.out.println(fileBackedTasksManager.getEpics());
 
     }
 }

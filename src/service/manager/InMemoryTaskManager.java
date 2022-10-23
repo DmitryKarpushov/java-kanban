@@ -294,13 +294,27 @@ public class InMemoryTaskManager implements TaskManager {
         if (epic != null) {
             List<SubTask> subTasks = getSubtasksEpicId(epic.getId());
             for (SubTask subTask : subTasks) {
-                if (subTask.getStatus().equals(TaskStatus.NEW)) {
-                    epic.setStatus(TaskStatus.NEW);
-                } else if (subTask.getStatus().equals(TaskStatus.DONE)) {
+//                if (subTask.getStatus().equals(TaskStatus.NEW)) {
+//                    epic.setStatus(TaskStatus.NEW);
+//                    return; // два костыля
+//                } else if (subTask.getStatus().equals(TaskStatus.DONE)) {
+//                    epic.setStatus(TaskStatus.DONE);
+//                } else {
+//                    epic.setStatus(TaskStatus.IN_PROGRESS);
+//                    return; // два костыля
+//                }
+
+                if (subTask.getStatus().equals(TaskStatus.NEW) || subTask.getStatus().equals(TaskStatus.IN_PROGRESS)) {
+                    if (subTask.getStatus().equals(TaskStatus.NEW)){
+                        epic.setStatus(TaskStatus.NEW);
+                    }else {
+                        epic.setStatus(TaskStatus.IN_PROGRESS);
+                        return;
+                    }
+                }else {
                     epic.setStatus(TaskStatus.DONE);
-                } else {
-                    epic.setStatus(TaskStatus.IN_PROGRESS);
                 }
+
             }
         }
     }
