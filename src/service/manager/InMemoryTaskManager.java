@@ -12,8 +12,7 @@ public class InMemoryTaskManager implements TaskManager {
     private final Map<Integer, Task> tasks = new HashMap<>();
     private final Map<Integer, SubTask> subTasks = new HashMap<>();
     private final Map<Integer, Epic> epics = new HashMap<>();
-    private final Comparator<Task> comparatorTasks = Comparator.comparing(Task::getStartTime);
-    protected Set<Task> prioritizedTasks = new TreeSet<>(comparatorTasks);
+    protected Set<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
     private final HistoryManager historyManager = Managers.getDefaultHistory();
     private Integer idTask = 0;
 
@@ -201,24 +200,33 @@ public class InMemoryTaskManager implements TaskManager {
         epic.setDuration(duration);
     }
 
-
+    /**
+     * epic- получили epic с его Subtask
+     * Если epic существует, проходимся по его subtask
+     * и удаляем из приоритета subtask'у, удаляем из мапы, удаляем из истории.
+     * */
     @Override
     public void deleteEpic(Integer id) {
         Epic epic = epics.get(id);
         if (epics.containsKey(id)) {
-            epic.getSubtasks().forEach(subtaskId -> {
-                prioritizedTasks.removeIf(task -> Objects.equals(task.getId(), subtaskId));
-                subTasks.remove(subtaskId);
-                Integer a = Integer.parseInt(String.valueOf(subtaskId));
-                historyManager.remove(a);
+            epic.getSubtasks().forEach(subtask -> {
+                prioritizedTasks.remove(subtask);
+                deleteSubtask(subtask.getId());
+                historyManager.remove(subtask.getId());
             });
             historyManager.remove(id);
             epics.remove(id);
+
         } else {
             System.err.println("Список задач Epic и так пуст");
         }
     }
 
+    /**
+     * 1)Почистили prioritizedTasks через Iterator, так как нужен неизменяемый список
+     * 2)Почистили subTasks
+     * 3)Проходимся по epics и чистим подзадачи
+     * */
     @Override
     public void deleteSubtasks() {
         Iterator<Task> iter = prioritizedTasks.iterator();
@@ -230,9 +238,8 @@ public class InMemoryTaskManager implements TaskManager {
             }
         subTasks.clear();
         for (Map.Entry<Integer, Epic> entry : epics.entrySet()) {
-            Epic value = entry.getValue();
-            value.getStatus().equals(String.valueOf(TaskStatus.NEW));
-            value.getSubtasks().clear();
+            Epic epic = entry.getValue();
+            epic.getSubtasks().clear();
             historyManager.remove(entry.getKey());
         }
         updateStatus();
@@ -285,11 +292,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     private void updateStatus(Epic epic) {
         if (epic != null) {
-            List<SubTask> value = getSubtasksEpicId(epic.getId());
-            for (SubTask subTask : value) {
-                if ((value == null)) {
-                    epic.setStatus(TaskStatus.NEW);
-                } else if (subTask.getStatus().equals(TaskStatus.NEW)) {
+            List<SubTask> subTasks = getSubtasksEpicId(epic.getId());
+            for (SubTask subTask : subTasks) {
+                if (subTask.getStatus().equals(TaskStatus.NEW)) {
                     epic.setStatus(TaskStatus.NEW);
                 } else if (subTask.getStatus().equals(TaskStatus.DONE)) {
                     epic.setStatus(TaskStatus.DONE);
@@ -303,20 +308,24 @@ public class InMemoryTaskManager implements TaskManager {
     /**
      * Данный метод оставил,тк при удалении всех сабтасков я прохожу по каждому эпику и
      * начинаю чистить подзадачи,в местах где можно проверять только один эпик сделал
+     * Если у Эпика нет подзадач, то делаем ему статус New.
      * */
     private void updateStatus() {
         for (Map.Entry<Integer, Epic> entry : epics.entrySet()) {
             Epic value = entry.getValue();
             for (SubTask subtask : value.getSubtasks()) {
-                if ((entry.getValue().getSubtasks() == null)) {
-                    entry.getValue().setStatus(TaskStatus.NEW);
+                if ((value.getSubtasks().isEmpty())) {
+                    value.setStatus(TaskStatus.NEW);
                 } else if (subtask.getStatus().equals(TaskStatus.NEW)) {
-                    entry.getValue().setStatus(TaskStatus.NEW);
+                    value.setStatus(TaskStatus.NEW);
                 } else if (subtask.getStatus().equals(TaskStatus.DONE)) {
-                    entry.getValue().setStatus(TaskStatus.DONE);
+                    value.setStatus(TaskStatus.DONE);
                 } else {
-                    entry.getValue().setStatus(TaskStatus.IN_PROGRESS);
+                    value.setStatus(TaskStatus.IN_PROGRESS);
                 }
+            }
+            if (value.getSubtasks().isEmpty()){
+                value.setStatus(TaskStatus.NEW);
             }
         }
     }

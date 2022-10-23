@@ -175,8 +175,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new FileReadErrorException("Не удалось считать файл");
+            throw new FileReadErrorException("Не удалось считать файл",e);
         }
 
     }

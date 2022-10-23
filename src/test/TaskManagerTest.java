@@ -218,7 +218,6 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     @Test
     @DisplayName("TaskManagerTest.Тестирование получения всех SubTask для Epic")
     void getSubTuskListByEpic() {
-        taskManager.getSubtasksEpicId(3).size();
         assertAll(
                 () -> assertNotEquals(taskManager.getSubtasksEpicId(3).size(), 1, "Задачи не совпадают")
         );
@@ -296,8 +295,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
                 taskManager.getTaskById(2));
         List<Task> prioritizedTasks = taskManager.getPrioritizedTasks();
 
-        assertEquals(expectedList, prioritizedTasks,
-                "Неправильный временной порядок");
+        assertEquals(expectedList, prioritizedTasks, "Неправильный временной порядок");
     }
 
 }
