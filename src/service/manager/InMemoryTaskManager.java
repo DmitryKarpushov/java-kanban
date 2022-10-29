@@ -9,12 +9,12 @@ import model.*;
 import service.history.HistoryManager;
 
 public class InMemoryTaskManager implements TaskManager {
-    private final Map<Integer, Task> tasks = new HashMap<>();
-    private final Map<Integer, SubTask> subTasks = new HashMap<>();
-    private final Map<Integer, Epic> epics = new HashMap<>();
+    protected final Map<Integer, Task> tasks = new HashMap<>();
+    protected final Map<Integer, SubTask> subTasks = new HashMap<>();
+    protected final Map<Integer, Epic> epics = new HashMap<>();
     protected Set<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
     private final HistoryManager historyManager = Managers.getDefaultHistory();
-    private Integer idTask = 0;
+    protected Integer idTask = 0;
 
     @Override
     public void addTasks(Task task) {
@@ -290,20 +290,13 @@ public class InMemoryTaskManager implements TaskManager {
         return idTask;
     }
 
+    /**
+     * Переделал полностью данный метод, сейчас отрабатывает отлично
+     * */
     private void updateStatus(Epic epic) {
         if (epic != null) {
             List<SubTask> subTasks = getSubtasksEpicId(epic.getId());
             for (SubTask subTask : subTasks) {
-//                if (subTask.getStatus().equals(TaskStatus.NEW)) {
-//                    epic.setStatus(TaskStatus.NEW);
-//                    return; // два костыля
-//                } else if (subTask.getStatus().equals(TaskStatus.DONE)) {
-//                    epic.setStatus(TaskStatus.DONE);
-//                } else {
-//                    epic.setStatus(TaskStatus.IN_PROGRESS);
-//                    return; // два костыля
-//                }
-
                 if (subTask.getStatus().equals(TaskStatus.NEW) || subTask.getStatus().equals(TaskStatus.IN_PROGRESS)) {
                     if (subTask.getStatus().equals(TaskStatus.NEW)){
                         epic.setStatus(TaskStatus.NEW);
@@ -353,7 +346,6 @@ public class InMemoryTaskManager implements TaskManager {
             historyManager.add(tasks.get(id));
         }
     }
-
     @Override
     public List<Task> getHistoryView() {
         return historyManager.getHistory();
@@ -362,7 +354,6 @@ public class InMemoryTaskManager implements TaskManager {
     public HistoryManager getHistoryManager() {
         return historyManager;
     }
-
     @Override
     public List<Task> getPrioritizedTasks() {
         return new ArrayList<>(prioritizedTasks);
@@ -380,4 +371,7 @@ public class InMemoryTaskManager implements TaskManager {
         return true;
     }
 
+    public Integer getIdTask() {
+        return idTask;
+    }
 }

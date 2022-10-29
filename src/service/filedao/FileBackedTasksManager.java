@@ -17,9 +17,10 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     public FileBackedTasksManager(File file) {
         this.file = file;
     }
-    private void save() {
+    public void save() {
+        File file = new File ("test.csv"); // тестирование
         try (PrintWriter writer = new PrintWriter(file)) {
-            writer.write("id,type,name,status,description,startTime,duration,endTime\n");
+            writer.write("id,type,name,status,description,startTime,duration,endTime,epic_id\n");
 
             for (Task task : getTasks()) {
                 writer.println(task.toString());

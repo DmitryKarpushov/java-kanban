@@ -6,6 +6,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import service.manager.InMemoryTaskManager;
 
+
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * @author Дмитрий Карпушов 21.10.2022
  */
