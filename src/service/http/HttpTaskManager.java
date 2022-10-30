@@ -8,10 +8,9 @@ import model.Task;
 import service.filedao.FileBackedTasksManager;
 import service.history.InMemoryHistoryManager;
 import service.manager.Managers;
-
 import java.io.File;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Дмитрий Карпушов 24.10.2022
@@ -22,14 +21,14 @@ public class HttpTaskManager extends FileBackedTasksManager {
     InMemoryHistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
     public HttpTaskManager() {
         super(null);
-        gson = Managers.getGson();
-        client = new KVTaskClient();
+        this.gson = Managers.getGson();
+        this.client = new KVTaskClient();
     }
 
     @Override
     public void loadFromFile(File file) {
-        Type tasksType = new TypeToken<ArrayList<Task>>(){}.getType();
-        ArrayList<Task> tasks = gson.fromJson(client.load("tasks"), tasksType);
+        Type tasksType = new TypeToken<List<Task>>(){}.getType();
+        List<Task> tasks = gson.fromJson(client.load("tasks"), tasksType);
         if (tasks != null) {
             tasks.forEach(task -> {
                 int id = task.getId();
@@ -41,8 +40,8 @@ public class HttpTaskManager extends FileBackedTasksManager {
             });
         }
 
-        Type subtasksType = new TypeToken<ArrayList<SubTask>>(){}.getType();
-        ArrayList<SubTask> subtasks = gson.fromJson(client.load("subtasks"), subtasksType);
+        Type subtasksType = new TypeToken<List<SubTask>>(){}.getType();
+        List<SubTask> subtasks = gson.fromJson(client.load("subtasks"), subtasksType);
         if (subtasks != null) {
             subtasks.forEach(subtask -> {
                 int id = subtask.getId();
@@ -54,9 +53,9 @@ public class HttpTaskManager extends FileBackedTasksManager {
             });
         }
 
-        Type epicsType = new TypeToken<ArrayList<Epic>>() {
+        Type epicsType = new TypeToken<List<Epic>>() {
         }.getType();
-        ArrayList<Epic> epics = gson.fromJson(client.load("epics"), epicsType);
+        List<Epic> epics = gson.fromJson(client.load("epics"), epicsType);
         if (epics != null) {
             epics.forEach(epic -> {
                 int id = epic.getId();
@@ -68,8 +67,8 @@ public class HttpTaskManager extends FileBackedTasksManager {
             });
         }
 
-        Type historyType = new TypeToken<ArrayList<Task>>(){}.getType();
-        ArrayList<Task> history = gson.fromJson(client.load("history"), historyType);
+        Type historyType = new TypeToken<List<Task>>(){}.getType();
+        List<Task> history = gson.fromJson(client.load("history"), historyType);
 
         if (history != null) {
             for (Task task:history) {

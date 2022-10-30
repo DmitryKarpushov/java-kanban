@@ -50,7 +50,7 @@ public class InMemoryTaskManager implements TaskManager {
                 updateTimeEpic(epic);
             }
         } else {
-            System.err.println("Задача пересекается по времени с уже существующей");
+            System.err.println("Задача пересекается по времени с уже существующей.");
         }
     }
 

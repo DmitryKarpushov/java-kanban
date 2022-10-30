@@ -3,6 +3,7 @@ package service.http;
 /**
  * @author Дмитрий Карпушов 24.10.2022
  */
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.IOException;
@@ -12,6 +13,8 @@ import java.util.Map;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
+import service.exception.KVServerLoadException;
+import service.exception.KVServerSaveException;
 
 public class KVServer {
     public static final int PORT = 8078;
@@ -54,12 +57,13 @@ public class KVServer {
                 System.out.println("/load ждет GET-запрос, а получил: " + httpExchange.getRequestMethod());
                 httpExchange.sendResponseHeaders(405, 0);
             }
-        }  catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new KVServerLoadException("Ошибка метода load в классе KVServer.", e);
         } finally {
             httpExchange.close();
         }
     }
+
     private void save(HttpExchange h) throws IOException {
         try {
             System.out.println("\n/save");
@@ -88,10 +92,13 @@ public class KVServer {
                 System.out.println("/save ждёт POST-запрос, а получил: " + h.getRequestMethod());
                 h.sendResponseHeaders(405, 0);
             }
+        } catch (IOException e) {
+            throw new KVServerSaveException("Ошибка метода save в классе KVServer.", e);
         } finally {
             h.close();
         }
     }
+
     private void register(HttpExchange h) throws IOException {
         try {
             System.out.println("\n/register");
@@ -105,12 +112,14 @@ public class KVServer {
             h.close();
         }
     }
+
     public void start() {
         System.out.println("Запускаем сервер на порту " + PORT);
         System.out.println("Открой в браузере http://localhost:" + PORT + "/");
         System.out.println("API_TOKEN: " + apiToken);
         server.start();
     }
+
     private String generateApiToken() {
         return "" + System.currentTimeMillis();
     }
@@ -130,6 +139,7 @@ public class KVServer {
         h.sendResponseHeaders(200, resp.length);
         h.getResponseBody().write(resp);
     }
+
     public void stop() {
         server.stop(0);
         System.out.println("Остановили сервер на порту " + PORT);

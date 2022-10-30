@@ -19,7 +19,7 @@ public class KVTaskClient {
     private final String url;
 
     public KVTaskClient() {
-        url = "http://localhost:8081/"; // был 8080 порт
+        url = "http://localhost:8081/";
         apiToken = register(url);
     }
 
